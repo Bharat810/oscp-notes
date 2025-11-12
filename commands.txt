@@ -1,0 +1,23 @@
+
+# Active Directory (generic commands) - sanitized for exam notes
+net user /domain
+net user "<USER>" /domain
+net group /domain
+net group "<GROUP>" /domain
+net localgroup "<LOCAL_GROUP>"
+hostname
+[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()
+powershell -ExecutionPolicy Bypass
+([adsi]'LDAP://<DN_BASE>').distinguishedName
+
+# PowerView / AD OPSEC helpers (do NOT store module contents or outputs)
+Import-Module .\PowerView.ps1     # store only the command, not the script
+Get-NetDomain
+Get-NetUser
+Get-NetUser | Select-Object cn
+Get-NetUser | Select-Object cn,pwdlastset,lastlogon
+Get-NetGroup | Select-Object cn
+Get-NetGroup "<GROUP>" | Select-Object member
+Get-NetComputer
+Get-NetComputer | Select-Object operatingsystem,dnshostname
+Find-LocalAdminAccess
